@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ItineraryCard } from './ItineraryCard';
 import { CostBreakdown } from './CostBreakdown';
+import { RouteMap } from './RouteMap';
 import { MapPin, Plane, Hotel, Star, CheckCircle2 } from 'lucide-react';
 
 interface PlanTabProps {
@@ -101,20 +102,11 @@ export const PlanTab = ({ plan, onBookNow }: PlanTabProps) => {
         totalCost={plan.totalCost}
       />
 
-      {/* Map Placeholder */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Route Map</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
-            <div className="text-center">
-              <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-              <p className="text-muted-foreground">Interactive map coming soon</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Interactive Route Map */}
+      <RouteMap
+        source={plan.flightDetails.departure}
+        destination={plan.flightDetails.arrival}
+      />
 
       {/* Book Now Button */}
       <div className="flex justify-center pt-4">

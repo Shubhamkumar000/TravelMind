@@ -1,14 +1,30 @@
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PlanTab } from './PlanTab';
-import { recommendedPlan, cheapestPlan, fastestPlan } from '@/data/mockData';
+import { TripPlan } from '@/data/mockData';
 import { Trophy, DollarSign, Zap } from 'lucide-react';
 
 interface ResultsDashboardProps {
+  plans: TripPlan[];
   onBookNow: (planId: string) => void;
 }
 
-export const ResultsDashboard = ({ onBookNow }: ResultsDashboardProps) => {
+export const ResultsDashboard = ({ plans, onBookNow }: ResultsDashboardProps) => {
+  const [recommendedPlan, cheapestPlan, fastestPlan] = plans;
+
+  // Require all three plans to be present
+  if (!recommendedPlan || !cheapestPlan || !fastestPlan) {
+    return (
+      <div className="text-center p-8">
+        <div className="inline-block w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-muted-foreground">Loading plans...</p>
+        <p className="text-sm text-muted-foreground mt-2">
+          Generating recommended, cheapest, and fastest options...
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="animate-fade-in">
       <div className="mb-6">
